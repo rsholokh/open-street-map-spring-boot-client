@@ -18,6 +18,6 @@ public class CoordinatesController {
 
     @GetMapping("/getCoordinates")
     public ResponseEntity getCoordinatesFromAddress (@RequestBody Address address) {
-
+        return null;
     }
 }
