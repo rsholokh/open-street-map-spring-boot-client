@@ -4,4 +4,7 @@ import com.romansholokh.openstreetmap.springbootclient.entity.Coordinates;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CoordinatesRepository extends JpaRepository<Coordinates, Integer> {
+    Coordinates findCoordinatesByLat(String lat);
+
+    Coordinates findCoordinatesById(int id);
 }
