@@ -22,10 +22,7 @@ public class CoordinatesController {
     private final CoordinatesService coordinatesService;
 
     @PostMapping("/getCoordinates")
-    public ResponseEntity<Coordinates> getCoordinatesFromAddressAndAddCoordinatesToDB(@RequestBody Address address) {
-        String city = address.getCity();
-        String street = address.getStreet();
-        String building = address.getBuilding();
+    public ResponseEntity getCoordinatesFromAddressAndAddCoordinatesToDB(@RequestBody Address address) {
 
         String url = "https://nominatim.openstreetmap.org/search/{city}%20{street}%20{building}?format=json&limit=1";
 
@@ -33,13 +30,16 @@ public class CoordinatesController {
 
         String coordinatesJson = null;
         try {
-            coordinatesJson = restTemplate.getForObject(url, String.class, city, street, building);
+            coordinatesJson = restTemplate.getForObject(url, String.class,
+                    address.getCity(),
+                    address.getStreet(),
+                    address.getBuilding());
         } catch (RestClientException e) {
             e.printStackTrace();
         }
 
         assert coordinatesJson != null;
-        Coordinates coordinates = null;
+        Coordinates coordinates;
         try {
             coordinates = JsonParser.parseJsonToCoordinatesObject(coordinatesJson);
         } catch (Exception e) {
@@ -49,5 +49,6 @@ public class CoordinatesController {
         }
 
         return ResponseEntity.ok(coordinatesService.add(coordinates));
+
     }
 }

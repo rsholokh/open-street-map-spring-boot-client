@@ -1,16 +1,21 @@
 package com.romansholokh.openstreetmap.springbootclient.pojo;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+import lombok.*;
 
 @Getter
 @Setter
-@AllArgsConstructor
+@NoArgsConstructor
 @ToString
 public class Address {
+    @Expose(deserialize = false)
     private String city;
+    @Expose(deserialize = false)
     private String street;
+    @Expose(deserialize = false)
     private String building;
+    @Expose(serialize = false)
+    @SerializedName("display_name")
+    private String fullAddress;
 }

@@ -29,11 +29,14 @@ class CoordinatesControllerTest {
 
     @Test
     void whenValidInput_thenReturns200() throws Exception {
-        Address address = new Address("London", "Piccadilly", "Burlington House");
+        Address address = new Address();
+        address.setCity("London");
+        address.setStreet("Piccadilly");
+        address.setStreet("Burlington House");
 
         mockMvc.perform(post("/getCoordinates")
-                .contentType("application/json")
-                .content(objectMapper.writeValueAsString(address)))
+                        .contentType("application/json")
+                        .content(objectMapper.writeValueAsString(address)))
                 .andExpect(status().isOk());
 
     }
