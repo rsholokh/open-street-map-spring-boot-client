@@ -59,5 +59,23 @@ class CoordinatesControllerTest {
         assertThat(expectedJson, is(givenJson));
     }
 
+    @Test
+    public void whenGetAddressJsonFromUrl_thenStatus200() {
+        TestRestTemplate restTemplate = new TestRestTemplate();
+
+        String lat = "51.5092768";
+        String lon = "-0.13973813543557267";
+
+        String url = "https://nominatim.openstreetmap.org/reverse?format=json&lat={lat}&lon={lon}";
+
+        String givenJson = "{\"place_id\":98690364,\"licence\":\"Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright\",\"osm_type\":\"way\",\"osm_id\":31510288,\"lat\":\"51.5092768\",\"lon\":\"-0.13973813543557267\",\"display_name\":\"Royal Academy of Arts, Piccadilly, St. James's, City of Westminster, London, Greater London, England, W1J 0BD, United Kingdom\",\"address\":{\"tourism\":\"Royal Academy of Arts\",\"road\":\"Piccadilly\",\"neighbourhood\":\"St. James's\",\"city\":\"City of Westminster\",\"state_district\":\"Greater London\",\"state\":\"England\",\"postcode\":\"W1J 0BD\",\"country\":\"United Kingdom\",\"country_code\":\"gb\"},\"boundingbox\":[\"51.508883\",\"51.5096454\",\"-0.1403344\",\"-0.1390605\"]}";
+
+        String expectedJson = restTemplate.getForObject(url, String.class, lat, lon);
+
+        System.out.println(expectedJson);
+
+        assertThat(expectedJson, is(givenJson));
+    }
+
 
 }
